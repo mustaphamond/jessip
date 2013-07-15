@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+export GCC_VERSION=44
+cd v8
+make dependencies
+#make native mode=debug library=static
+make native library=static werror=no
+cp include/*.h ../../include
+cp out/native/obj.target/tools/gyp/*.a ../../lib

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+SHA1="2ba970b17eb5424b04d0b9201c77d49b8ac915ea"
+rm -rf v8
+RET=$?
+if [ $RET -ne 0 ]
+then
+   echo "Failed to remove old V8 directory"
+   exit $RET
+fi
+
+git clone git://github.com/v8/v8.git v8
+RET=$?
+if [ $RET -ne 0 ]
+then
+   rm -rf v8
+   git clone https://github.com/v8/v8.git v8
+	RET=$?
+   if [ $RET -ne 0 ]
+   then
+      echo "Failed to retreive V8 from git"
+      exit $RET
+   fi
+fi
+
+cd v8
+git checkout $SHA1
+cd ..
+
